@@ -3,17 +3,11 @@ import json
 from PIL import Image
 import pytesseract
 
-# Set path to Tesseract executable (adjust if needed)
+# Set path to Tesseract executable
 pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 def extract_text_from_input(input_data, input_type="text"):
-    """
-    Extract text and confidence score from either text or image input.
 
-    :param input_data: String (text) or path to image file
-    :param input_type: "text" or "image"
-    :return: dict with raw_text and confidence
-    """
     result = {
         "raw_text": "",
         "confidence": 0.0
@@ -21,7 +15,7 @@ def extract_text_from_input(input_data, input_type="text"):
 
     if input_type == "text":
         result["raw_text"] = input_data
-        result["confidence"] = 1.0  # Direct text assumed correct
+        result["confidence"] = 1.0  # Direct text assumed correct 
 
     elif input_type == "image":
         try:
@@ -36,7 +30,7 @@ def extract_text_from_input(input_data, input_type="text"):
             confs = [float(c) for c in ocr_data["conf"] if c != "-1"]
             if confs:
                 avg_conf = sum(confs) / len(confs)
-                result["confidence"] = round(avg_conf / 100, 2)  # normalize 0–1
+                result["confidence"] = round(avg_conf / 100, 2)
             else:
                 result["confidence"] = 0.0
 

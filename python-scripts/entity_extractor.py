@@ -14,8 +14,9 @@ def extract_entities(text):
 
     text_lower = text.lower()
 
-    # Extract department (simple keyword matching)
-    departments = ["dentist", "doctor", "cardiologist", "dermatologist", "orthopedic"]
+    # Extract department
+    departments = ["dentist","doctor","cardiologist","dermatologist","orthopedic","neurologist","gynecologist","pediatrician","ophthalmologist"]
+
     for dept in departments:
         if dept in text_lower:
             result["entities"]["department"] = dept
@@ -26,7 +27,7 @@ def extract_entities(text):
     if time_match:
         result["entities"]["time_phrase"] = time_match.group(1)
 
-    # Extract date phrase (very simple heuristic)
+    # Extract date phrase
     date_keywords = ["today", "tomorrow", "next monday", "next tuesday", "next wednesday",
                      "next thursday", "next friday", "next saturday", "next sunday"]
     for dk in date_keywords:
@@ -34,9 +35,9 @@ def extract_entities(text):
             result["entities"]["date_phrase"] = dk
             break
 
-    # Compute confidence (very naive: count found fields)
+    # Compute confidence
     found = sum(1 for v in result["entities"].values() if v)
-    result["entities_confidence"] = round(found / 3, 2)  # normalize to 0–1
+    result["entities_confidence"] = round(found / 3, 2)
 
     return result
 
